@@ -1,0 +1,11 @@
+<div ng-controller="publisherController" class="container-fluid">
+	<table class="table table-striped">
+		<tr class="info">
+			<th>Publisher</th>
+		</tr>
+
+		<tr ng-repeat="publisher in publishers | filter: { 'fullname': query }">
+			<td>{{publisher.fullname}}</td>
+		</tr>		
+	</table>
+</div>

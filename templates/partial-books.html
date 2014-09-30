@@ -1,0 +1,26 @@
+<div ng-controller="bookController" class="container-fluid">
+	<table class="table table-striped">
+		<tr class="info">
+			<th>Book</th>
+			<th>Year</th>		
+			<th></th>
+		</tr>
+
+		<tr ng-repeat="book in books | filter: { 'title': query }">
+			<td>{{book.title}}</td>
+			<td>{{book.year}}</td>		
+		
+			<td>
+				<span class="btn-group" dropdown is-open="status.isopen">
+					<button type="button" class="btn btn-default btn-sm dropdown-toggle">Actions<span class="caret"></span></button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="" ng-click="addBook()">Add</a></li>
+						<li><a href="" ng-click="editBook(book.id, book.title, book.publisher.fullname, book.year)">Edit</a></li>
+						<li><a href="" ng-click="deleteBook(book.id)">Delete</a></li>
+					</ul>
+				</span>
+			</td>
+
+		</tr>
+	</table>
+</div>
