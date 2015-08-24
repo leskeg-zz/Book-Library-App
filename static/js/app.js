@@ -14,12 +14,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
     .state('books',{
         url: '/books',
-        templateUrl: 'templates/partial-books.html'
+        templateUrl: 'static/templates/partial-books.html'
     })
 
     .state('publishers',{
         url: '/publishers',
-        templateUrl: 'templates/partial-publishers.html'
-    })
+        templateUrl: 'static/templates/partial-publishers.html'
+    });
 
 }]);

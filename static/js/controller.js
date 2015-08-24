@@ -1,12 +1,13 @@
+var localhost = 'http://leskeg.koding.io:8000/'
 app.controller('bookController', ['$http', '$scope', 'ngDialog','$state', function ($http, $scope, ngDialog,$state){
 
-    $http.get('http://127.0.0.1:8000/books/book/?format=json').success (function(data){
+    $http.get(localhost + 'books/book/?format=json').success (function(data){
 		$scope.books = data.objects;
 	});
 
     $scope.deleteBook = function(id){
         $http({
-                url: 'http://127.0.0.1:8000/deletebook/',
+                url: localhost + 'deletebook/',
                 method: 'POST',
                 data: {"id": id}
         }).then(function(result) {
@@ -16,7 +17,7 @@ app.controller('bookController', ['$http', '$scope', 'ngDialog','$state', functi
 
     $scope.addBook = function () {
         ngDialog.open({ 
-            template: 'templates/popup-addBook.html', 
+            template: 'static/templates/popup-addBook.html', 
             controller:'addBookController', 
             scope: $scope 
         });
@@ -24,7 +25,7 @@ app.controller('bookController', ['$http', '$scope', 'ngDialog','$state', functi
 
     $scope.editBook = function(id, title, publisher, year){
         ngDialog.open({ 
-            template: 'templates/popup-editBook.html', 
+            template: 'static/templates/popup-editBook.html', 
             controller:'editBookController',
             data: { "id": id, "title": title, "publisher": publisher, "year": year },
             scope: $scope
@@ -34,7 +35,7 @@ app.controller('bookController', ['$http', '$scope', 'ngDialog','$state', functi
 }]);
 
 app.controller('publisherController', ['$http', '$scope', function ($http, $scope){
-    $http.get('http://127.0.0.1:8000/publishers/publisher/?format=json').success (function(data){
+    $http.get(localhost + 'publishers/publisher/?format=json').success (function(data){
         $scope.publishers = data.objects;
     });
 }]);
@@ -42,14 +43,14 @@ app.controller('publisherController', ['$http', '$scope', function ($http, $scop
 app.controller('addBookController', ['$http', '$scope', '$filter','$state','allYears', function ($http, $scope, $filter,$state,allYears){
     $scope.years = allYears.years();
 
-    $http.get('http://127.0.0.1:8000/publishers/publisher/?format=json').success (function(data){
+    $http.get(localhost + 'publishers/publisher/?format=json').success (function(data){
         $scope.publishers = data.objects;
     });
 
     $scope.newbook = function(){
         if ($scope.myForm.$valid) {
             $http({
-                url: 'http://127.0.0.1:8000/addbook/',
+                url: localhost + 'addbook/',
                 method: 'POST',
                 data: {"title": $scope.myTitle, "publisher": $scope.myPub, "year": $scope.myYear}
             }).then(function(result) {
@@ -65,7 +66,7 @@ app.controller('editBookController', ['$http', '$scope', '$filter','$state','all
     $scope.years = allYears.years();
     $scope.myYear = $scope.ngDialogData.year;
 
-    $http.get('http://127.0.0.1:8000/publishers/publisher/?format=json').success (function(data){
+    $http.get(localhost + 'publishers/publisher/?format=json').success (function(data){
         $scope.publishers = data.objects;
         $scope.myPub = $filter('filter')($scope.publishers, {"fullname": $scope.ngDialogData.publisher})[0].id;
     });
@@ -73,7 +74,7 @@ app.controller('editBookController', ['$http', '$scope', '$filter','$state','all
     $scope.updatebook = function(){
         if ($scope.myForm.$valid) {
             $http({
-                url: 'http://127.0.0.1:8000/editbook/',
+                url: localhost + 'editbook/',
                 method: 'POST',
                 data: {"id": $scope.ngDialogData.id, "title": $scope.myTitle, "publisher": $scope.myPub, "year": $scope.myYear}
             }).then(function(result) {

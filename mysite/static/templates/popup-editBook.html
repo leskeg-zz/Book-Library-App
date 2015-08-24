@@ -1,0 +1,42 @@
+<div ng-controller="editBookController" class="container-fluid">
+  <div class="dialog-contents">
+  <form name="myForm" class="css-form" role="form" ng-submit="updatebook()" novalidate> 
+    
+    <div class="row">
+      
+      <div>
+        <div class="form-group">
+          Title of book <span ng-show="myForm.submitted && myForm.myTitle.$error.required"><small>Required!</small></span>
+      </span>
+            <input type="text" class="form-control" ng-model="myTitle" name="myTitle" ng-init="myTitle=ngDialogData.title" required>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      
+      <div>
+        <div class="form-group">
+          Year <span ng-show="myForm.submitted && myForm.myYear.$error.required"><small>Required!</small></span><br/>
+          <select ng-model="myYear" ng-options="year for year in years" name="myYear" required></select>
+        </div>
+      </div>
+    
+    </div>
+
+    <div class="row">
+      
+      <div>
+       <div class="form-group">
+          Publisher <span ng-show="myForm.submitted && myForm.myPub.$error.required"><small>Required!</small></span><br/>
+          <select ng-model="myPub" ng-options="publisher.id as publisher.fullname for publisher in publishers" name="myPub" required></select>
+        </div> 
+      </div>
+
+    </div>
+    
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+  </div>
+</div>
+<!-- ng-click="closeThisDialog(0)" -->
