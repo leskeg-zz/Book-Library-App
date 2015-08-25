@@ -7,9 +7,11 @@ app.controller('bookController', ['$http', '$scope', 'ngDialog','$state', functi
 
     $scope.deleteBook = function(id){
         $http({
-                url: localhost + 'deletebook/',
-                method: 'POST',
-                data: {"id": id}
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            url: localhost + 'books/book/'+id+'/',
+            method: 'DELETE',
         }).then(function(result) {
             $state.go($state.current, {}, {reload: true});
         });
@@ -40,7 +42,7 @@ app.controller('publisherController', ['$http', '$scope', function ($http, $scop
     });
 }]);
 
-app.controller('addBookController', ['$http', '$scope', '$filter','$state','allYears', function ($http, $scope, $filter,$state,allYears){
+app.controller('addBookController', ['$http', '$scope', '$filter','$state','allYears','ngDialog', function ($http, $scope, $filter,$state,allYears,ngDialog){
     $scope.years = allYears.years();
 
     $http.get(localhost + 'publishers/publisher/?format=json').success (function(data){
@@ -50,10 +52,14 @@ app.controller('addBookController', ['$http', '$scope', '$filter','$state','allY
     $scope.newbook = function(){
         if ($scope.myForm.$valid) {
             $http({
-                url: localhost + 'addbook/',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: localhost + 'books/book/',
                 method: 'POST',
-                data: {"title": $scope.myTitle, "publisher": $scope.myPub, "year": $scope.myYear}
+                data: {"title": $scope.myTitle, "publisher": '/publishers/publisher/'+$scope.myPub+'/', "year": $scope.myYear}
             }).then(function(result) {
+                ngDialog.close()
                 $state.go($state.current, {}, {reload: true});
             });
         } else {
@@ -62,7 +68,7 @@ app.controller('addBookController', ['$http', '$scope', '$filter','$state','allY
     };
 }]);
 
-app.controller('editBookController', ['$http', '$scope', '$filter','$state','allYears', function ($http, $scope, $filter,$state,allYears){
+app.controller('editBookController', ['$http', '$scope', '$filter','$state','allYears','ngDialog', function ($http, $scope, $filter,$state,allYears,ngDialog){
     $scope.years = allYears.years();
     $scope.myYear = $scope.ngDialogData.year;
 
@@ -74,10 +80,14 @@ app.controller('editBookController', ['$http', '$scope', '$filter','$state','all
     $scope.updatebook = function(){
         if ($scope.myForm.$valid) {
             $http({
-                url: localhost + 'editbook/',
-                method: 'POST',
-                data: {"id": $scope.ngDialogData.id, "title": $scope.myTitle, "publisher": $scope.myPub, "year": $scope.myYear}
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: localhost + 'books/book/'+$scope.ngDialogData.id+'/',
+                method: 'PUT',
+                data: {"title": $scope.myTitle, "publisher": '/publishers/publisher/'+$scope.myPub+'/', "year": $scope.myYear}
             }).then(function(result) {
+                ngDialog.close();
                 $state.go($state.current, {}, {reload: true});
             });
         } else {

@@ -15,10 +15,5 @@ urlpatterns = patterns('',
     url(r'^$', 'myapp.views.index'),
     url(r'^books/', include(book_resource.urls)),
     url(r'^publishers/', include(publisher_resource.urls)),
-
-    url(r'^addbook/$', 'myapp.views.addBook'),
-    url(r'^editbook/$', 'myapp.views.editBook'),
-    url(r'^deletebook/$', 'myapp.views.deleteBook'),
-
     url(r'^admin/', include(admin.site.urls)),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

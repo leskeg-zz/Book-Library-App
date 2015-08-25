@@ -20,6 +20,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
     .state('publishers',{
         url: '/publishers',
         templateUrl: 'static/templates/partial-publishers.html'
-    });
+    })
 
 }]);
