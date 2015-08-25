@@ -1,13 +1,16 @@
 <div ng-controller="bookController" class="container-fluid">
+    <!-- <pre>Sorting predicate = {{predicate}}; reverse = {{reverse}}</pre> -->
 	<table class="table table-striped">
 		<tr class="info">
-			<th>Book</th>
-			<th>Year</th>		
+			<th><a href='' ng-click="order('title')">Book</a></th>
+			<th><a href='' ng-click="order('publisher.fullname')">Publisher</a></th>
+			<th><a href='' ng-click="order('year')">Year</a></th>		
 			<th></th>
 		</tr>
 
-		<tr ng-repeat="book in books | filter: { 'title': query }">
+		<tr ng-repeat="book in books | filter: { 'title': query } | orderBy:predicate:reverse">
 			<td>{{book.title}}</td>
+			<td>{{book.publisher.fullname}}</td>
 			<td>{{book.year}}</td>		
 		
 			<td>

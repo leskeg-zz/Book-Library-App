@@ -4,7 +4,14 @@ app.controller('bookController', ['$http', '$scope', 'ngDialog','$state', functi
     $http.get(localhost + 'books/book/?format=json').success (function(data){
 		$scope.books = data.objects;
 	});
-
+    
+    $scope.predicate = 'title';
+    $scope.reverse = false;
+    $scope.order = function(predicate) {
+        $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        $scope.predicate = predicate;
+    };
+    
     $scope.deleteBook = function(id){
         $http({
             headers: {
@@ -59,7 +66,7 @@ app.controller('addBookController', ['$http', '$scope', '$filter','$state','allY
                 method: 'POST',
                 data: {"title": $scope.myTitle, "publisher": '/publishers/publisher/'+$scope.myPub+'/', "year": $scope.myYear}
             }).then(function(result) {
-                ngDialog.close()
+                ngDialog.close();
                 $state.go($state.current, {}, {reload: true});
             });
         } else {
