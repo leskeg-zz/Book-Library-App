@@ -1,4 +1,4 @@
-var localhost = 'http://leskeg.koding.io:8000/'
+var localhost = window.location.origin + '/';
 app.controller('bookController', ['$http', '$scope', 'ngDialog','$state', function ($http, $scope, ngDialog,$state){
 
     $http.get(localhost + 'books/book/?format=json').success (function(data){
